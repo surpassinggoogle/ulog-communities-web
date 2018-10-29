@@ -1,0 +1,31 @@
+{
+  "name": "ulog-communities-web",
+  "version": "1.0.0",
+  "description": "Front-end for modifying ulog overseers",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon ./start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eastmaels/ulog-communities-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eastmaels/ulog-communities-web/issues"
+  },
+  "homepage": "https://github.com/eastmaels/ulog-communities-web#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.0",
+    "mongoose": "^5.3.7",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
