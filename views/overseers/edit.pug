@@ -1,0 +1,43 @@
+extends ../layout
+
+block content
+  -data = data || {}
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  form(action="./edit" method="POST" class="form-registration")
+    label(for="name") Name:
+    input(
+      type="text"
+      id="name"
+      name="name"
+      class="form-control"
+      value=data.name
+    )
+
+    label(for="tags") Tags:
+    input(
+      type="text"
+      id="tags"
+      name="tags"
+      class="form-control"
+      value=data.tags
+    )
+
+    label(for="maxweight") Max Vote Weight:
+    input(
+      type="text"
+      id="maxweight"
+      name="maxweight"
+      class="form-control"
+      value=data.maxweight
+    )
+
+    input(
+      type="submit"
+      value="Submit"
+      class="btn btn-lg btn-primary btn-block"
+    )

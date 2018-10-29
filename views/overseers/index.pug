@@ -10,7 +10,8 @@ block content
         th Max Vote Weight
       each overseer in overseers
         tr
-          td= overseer.name
+          td
+            a(href='overseers/edit/' + overseer.name)= overseer.name
           td
             each tag in overseer.tags
               span.badge.badge-primary= tag
