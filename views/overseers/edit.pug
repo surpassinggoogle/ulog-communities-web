@@ -8,6 +8,8 @@ block content
       for error in errors
         li= error.msg
 
+  a(href="/overseers") Back
+
   form(action="./edit" method="POST" class="form-registration")
     label(for="name") Name:
     input(
@@ -19,13 +21,14 @@ block content
     )
 
     label(for="tags") Tags:
-    input(
-      type="text"
-      id="tags"
-      name="tags"
-      class="form-control"
-      value=data.tags
-    )
+    each tag in data.tags
+      input(
+        type="text"
+        id="tags"
+        name="tags"
+        class="form-control"
+        value=tag
+      )
 
     label(for="maxweight") Max Vote Weight:
     input(
