@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+
+  if overseers.length
+    table.listing-table.table-dark.table-striped
+      tr
+        th Name
+        th Sub-tags
+        th Max Vote Weight
+      each overseer in overseers
+        tr
+          td= overseer.name
+          td
+            each tag in overseer.tags
+              span.badge.badge-primary= tag
+          td= overseer.maxweight
+  else
+    p No overseers yet :(

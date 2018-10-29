@@ -1,4 +1,4 @@
-extends layout
+extends ../layout
 
 block content
   -data = data || {}
@@ -8,7 +8,7 @@ block content
       for error in errors
         li= error.msg
 
-  form(action="." method="POST" class="form-registration")
+  form(action="./new" method="POST" class="form-registration")
     label(for="name") Name:
     input(
       type="text"
@@ -18,13 +18,22 @@ block content
       value=data.name
     )
 
-    label(for="email") Email:
+    label(for="tags") Tags:
     input(
-      type="email"
-      id="email"
-      name="email"
+      type="text"
+      id="tags"
+      name="tags"
       class="form-control"
-      value=data.email
+      value=data.tags
+    )
+
+    label(for="maxweight") Max Vote Weight:
+    input(
+      type="text"
+      id="maxweight"
+      name="maxweight"
+      class="form-control"
+      value=data.maxweight
     )
 
     input(

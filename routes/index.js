@@ -3,32 +3,55 @@ const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator/check');
 
 const router = express.Router();
-const Registration = mongoose.model('Registration');
+const Overseer = mongoose.model('Overseer');
 
-router.get('/', (req, res) => {
-  res.render('form', { title: 'Registration form' });
+const path = require('path');
+const auth = require('http-auth');
+const basic = auth.basic({
+  file: path.join(__dirname, '../users.htpasswd'),
 });
 
-router.post('/',
+
+router.get('/', (req, res) => {
+  res.render('home', { title: 'Welcome' });
+});
+
+router.get('/overseers', auth.connect(basic), (req, res) => {
+  Overseer.find()
+    .then((overseers) => {
+      res.render('overseers/index', { title: 'Listing overseers', overseers });
+    })
+    .catch(() => { res.send('Sorry! Something went wrong.'); });
+});
+
+router.get('/overseers/new', (req, res) => {
+  res.render('overseers/new', { title: 'New Overseer' });
+});
+
+router.post('/overseers/new',
 [
   body('name')
     .isLength({ min: 1 })
     .withMessage('Please enter a name'),
-  body('email')
+  body('tags')
     .isLength({ min: 1 })
-    .withMessage('Please enter an email'),
+    .withMessage('Please enter a tag'),
+  body('maxweight')
+    .isLength({ min: 1 })
+    .withMessage('Please enter a weight'),
 ],
+auth.connect(basic), 
 (req, res) => {
   const errors = validationResult(req);
 
   if (errors.isEmpty()) {
-    const registration = new Registration(req.body);
-    registration.save()
-      .then(() => { res.send('Thank you for your registration!'); })
+    const overseer = new Overseer(req.body);
+    overseer.save()
+      .then(() => { res.redirect('/overseers'); })
       .catch(() => { res.send('Sorry! Something went wrong.'); });
   } else {
-    res.render('form', {
-      title: 'Registration form',
+    res.render('overseers/new', {
+      title: 'Overseer form',
       errors: errors.array(),
       data: req.body,
     });
@@ -36,5 +59,6 @@ router.post('/',
 
   console.log(req.body);
 });
+
 
 module.exports = router;

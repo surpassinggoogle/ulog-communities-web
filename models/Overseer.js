@@ -1,15 +1,12 @@
-import { Document, Schema, Model, model} from "mongoose"
+const mongoose = require('mongoose');
 
-export interface IOverseerModel extends Document {
-  name?: string
-  tags?: string[]
-  maxweight?: number
-}
-
-export var OverseerSchema: Schema = new Schema({
-  name: String,
+const overseerSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    trim: true,
+  },
   tags: [],
   maxweight: Number,
-})
+});
 
-export const Overseer: Model<IOverseerModel> = model<IOverseerModel>("Overseer", OverseerSchema)
+module.exports = mongoose.model('Overseer', overseerSchema);
