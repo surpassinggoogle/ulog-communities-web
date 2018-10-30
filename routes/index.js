@@ -10,8 +10,8 @@ const basic = auth.basic(
   {
     realm: "Users"
   }, (username, password, callback) => { 
-    callback(username === process.env.BASIC_AUTH_USERNAME
-      && password === process.env.BASIC_AUTH_PASSWORD);
+    callback(username === process.env.USERNAME
+      && password === process.env.PASSWORD);
   }
 );
 
