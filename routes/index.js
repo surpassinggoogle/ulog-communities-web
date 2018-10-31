@@ -10,8 +10,8 @@ const basic = auth.basic(
   {
     realm: "Users"
   }, (username, password, callback) => { 
-    callback(username === process.env.USERNAME
-      && password === process.env.PASSWORD);
+    callback(username === process.env.BASIC_AUTH_USERNAME
+      && password === process.env.BASIC_AUTH_PASSWORD);
   }
 );
 
@@ -79,10 +79,13 @@ router.get(
   auth.connect(basic),
   (req, res) => {
     Overseer.findOne({name : req.params.userId})
-      .then((overseer) => {
+      .then((overseerObj) => {
+        let tagsCsv = overseerObj.tags.join(",")
+
         res.render('overseers/edit', {
           title: 'Edit Overseer',
-          data: overseer
+          data: overseerObj,
+          tagsCsv: tagsCsv
         });
       })
       .catch(() => { res.send('Sorry! Something went wrong.'); });
@@ -95,7 +98,7 @@ router.post(
     body('name')
       .isLength({ min: 1 })
       .withMessage('Please enter a name'),
-    body('tags')
+    body('tagsCsv')
       .isLength({ min: 1 })
       .withMessage('Please enter a tag'),
     body('maxweight')
@@ -105,11 +108,12 @@ router.post(
   auth.connect(basic), 
   (req, res) => {
     const errors = validationResult(req);
+    console.log('tag csv: ', req.body.tagsCsv)
 
     if (errors.isEmpty()) {
       const overseer = new Overseer(req.body);
       const query = { name: req.body.name }
-      Overseer.findOneAndUpdate(query, { tags: req.body.tags, maxweight: req.body.maxweight})
+      Overseer.findOneAndUpdate(query, { tags: req.body.tagsCsv.split(","), maxweight: req.body.maxweight})
         .then(() => { res.redirect('/overseers'); })
         .catch(() => { res.send('Sorry! Something went wrong.'); });
     } else {
