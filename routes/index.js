@@ -5,11 +5,15 @@ const { body, validationResult } = require('express-validator/check');
 const router = express.Router();
 const Overseer = mongoose.model('Overseer');
 
-const path = require('path');
 const auth = require('http-auth');
-const basic = auth.basic({
-  file: path.join(__dirname, '../users.htpasswd'),
-});
+const basic = auth.basic(
+  {
+    realm: "Users"
+  }, (username, password, callback) => { 
+    callback(username === process.env.USERNAME
+      && password === process.env.PASSWORD);
+  }
+);
 
 
 router.get('/', (req, res) => {

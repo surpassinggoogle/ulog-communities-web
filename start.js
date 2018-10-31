@@ -1,5 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const PORT = process.env.PORT || 3000
 
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
@@ -15,6 +16,6 @@ require('./models/Registration');
 require('./models/Overseer');
 const app = require('./app');
 
-const server = app.listen(3000, () => {
+const server = app.listen(PORT, () => {
   console.log(`Express is running on port ${server.address().port}`);
 });
