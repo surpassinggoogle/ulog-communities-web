@@ -112,7 +112,10 @@ router.post(
 
     if (errors.isEmpty()) {
       const query = { name: req.body.name }
-      Overseer.findOneAndUpdate(query, { tags: req.body.tagsCsv.split(","), maxweight: req.body.maxweight})
+      let trimmedTags = req.body.tagsCsv.split(",").map(function(item) {
+        return item.trim();
+      });
+      Overseer.findOneAndUpdate(query, { tags: trimmedTags, maxweight: req.body.maxweight})
         .then(() => { res.redirect('/overseers'); })
         .catch(() => { res.send('Sorry! Something went wrong.'); });
     } else {
