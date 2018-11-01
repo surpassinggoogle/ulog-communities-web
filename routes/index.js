@@ -59,7 +59,9 @@ router.post(
 
     if (errors.isEmpty()) {
       const overseer = new Overseer(req.body);
-      overseer.tags= req.body.tagsCsv.split(",")
+      overseer.tags= req.body.tagsCsv.split(",").map(function(item) {
+        return item.trim();
+      });
       overseer.save()
         .then(() => { res.redirect('/overseers'); })
         .catch(() => { res.send('Sorry! Something went wrong.'); });
