@@ -12,40 +12,49 @@ block content
       for error in errors
         li= error.msg
 
-  a(
-    class="btn btn-primary"
-    href="/overseers/new"
-    style="float: right"
-  ) Add Overseer
+  div(class="container-fluid")
+    div(class="row flex-x1-nowrap")
+      div(class="col-12 col-md-12 col-xl-12")
+        a(
+          class="btn btn-primary"
+          href="/overseers/new"
+          style="float: right"
+        ) Add Overseer
 
   if overseers.length
-    div(class="container-fluid")
-      table.table.table-hover
-        thead.thead-light
-          tr.d-flex
-            th(class="col-2") Name
-            th(class="col-6") Sub-tags
-            th(class="col-2") Max Vote Weight
-            th(class="col-2") Actions
-        tbody
-          each overseer in overseers
+    div(class="row flex-x1-nowrap")
+      div(class="col-12 col-md-12 col-xl-12")
+        table.table.table-hover
+          thead.thead-light
             tr.d-flex
-              td(class="col-2")
-                a(href='overseers/' + overseer.name + '/edit')= overseer.name
-              td(class="col-7")
-                each tag in overseer.tags
-                  span.badge.badge-primary.subtag= tag
-              td(class="col-2")
-                a(href='overseers/' + overseer.name + '/edit')= overseer.maxweight
-              td(class="col-2")
-                form(
-                  action=("/overseers/" + overseer.name + '/delete')
-                  method="post"
-                )
-                  button(
-                    type="submit"
-                    class="button-icon"
+              th(class="col-2 col-md-3") Name
+              th(class="col-6 col-md-5") Sub-tags
+              th(class="col-2 col-md-2") Max Weight
+              th(class="col-2 col-md-2")
+          tbody
+            each overseer in overseers
+              tr.d-flex
+                td(class="col-2 col-md-3")
+                  a(href='overseers/' + overseer.name + '/edit')= overseer.name
+                td(class="col-7 col-md-5")
+                  each tag in overseer.tags
+                    span.btn.btn-primary.btn-sm.subtag= tag
+                td(class="col-2 col-md-2")
+                  a(href='overseers/' + overseer.name + '/edit')= overseer.maxweight
+                td(class="col-2 col-md-2")
+                  form(
+                    action=("/overseers/" + overseer.name + '/delete')
+                    method="post"
                   )
-                    i(class="fas fa-trash-alt")
+                    a(
+                      class="btn btn-outline-primary"
+                      href='overseers/' + overseer.name + '/edit'
+                    )
+                      i(class="fas fa-pencil-alt")
+                    button(
+                      type="submit"
+                      class="btn btn-outline-danger"
+                    )
+                      i(class="fas fa-trash-alt")
   else
     p No overseers yet :(
