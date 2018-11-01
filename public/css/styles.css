@@ -66,3 +66,10 @@ body {
 .subtag {
   margin: 2px;
 }
+
+.button-icon {
+  background:none;
+  border:none;
+  padding:0;
+  outline:none;
+}

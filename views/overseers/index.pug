@@ -1,6 +1,16 @@
 extends ../layout
 
 block content
+  if message
+    div(
+      class="alert alert-warning alert-dismissible fade show"
+      role="alert"
+    )= message
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
 
   if overseers.length
     div(class="container-fluid")
@@ -8,16 +18,28 @@ block content
         thead.thead-light
           tr.d-flex
             th(class="col-2") Name
-            th(class="col-8") Sub-tags
+            th(class="col-6") Sub-tags
             th(class="col-2") Max Vote Weight
+            th(class="col-2") Actions
         tbody
           each overseer in overseers
             tr.d-flex
               td(class="col-2")
-                a(href='overseers/edit/' + overseer.name)= overseer.name
-              td(class="col-8")
+                a(href='overseers/' + overseer.name + '/edit')= overseer.name
+              td(class="col-7")
                 each tag in overseer.tags
                   span.badge.badge-primary.subtag= tag
-              td(class="col-2")= overseer.maxweight
+              td(class="col-2")
+                a(href='overseers/' + overseer.name + '/edit')= overseer.maxweight
+              td(class="col-2")
+                form(
+                  action=("/overseers/" + overseer.name + '/delete')
+                  method="post"
+                )
+                  button(
+                    type="submit"
+                    class="button-icon"
+                  )
+                    i(class="fas fa-trash-alt")
   else
     p No overseers yet :(

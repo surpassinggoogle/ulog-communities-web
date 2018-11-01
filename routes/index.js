@@ -24,7 +24,7 @@ router.get(
   '/overseers',
   auth.connect(basic),
   (req, res) => {
-    Overseer.find()
+    Overseer.find().sort({name: 'asc'})
       .then((overseers) => {
         res.render('overseers/index', { title: 'Listing overseers', overseers });
       })
@@ -75,7 +75,7 @@ router.post(
 );
 
 router.get(
-  '/overseers/edit/:userId',
+  '/overseers/:userId/edit/',
   auth.connect(basic),
   (req, res) => {
     Overseer.findOne({name : req.params.userId})
@@ -93,7 +93,7 @@ router.get(
 );
 
 router.post(
-  '/overseers/edit/:userId',
+  '/overseers/:userId/edit/',
   [
     body('name')
       .isLength({ min: 1 })
@@ -111,7 +111,6 @@ router.post(
     console.log('tag csv: ', req.body.tagsCsv)
 
     if (errors.isEmpty()) {
-      const overseer = new Overseer(req.body);
       const query = { name: req.body.name }
       Overseer.findOneAndUpdate(query, { tags: req.body.tagsCsv.split(","), maxweight: req.body.maxweight})
         .then(() => { res.redirect('/overseers'); })
@@ -127,5 +126,23 @@ router.post(
     console.log(req.body);
   }
 );
+
+router.post(
+  '/overseers/:userId/delete',
+  auth.connect(basic), 
+  (req, res) => {
+
+    const query = { name: req.params.userId }
+    console.log('query', query)
+    Overseer.deleteOne(query)
+      .then(() => {
+        res.redirect('/overseers');
+      })
+      .catch(() => { res.send('Sorry! Something went wrong.'); });
+
+
+  }
+);
+
 
 module.exports = router;
