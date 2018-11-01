@@ -46,7 +46,7 @@ router.post(
     body('name')
       .isLength({ min: 1 })
       .withMessage('Please enter a name'),
-    body('tags')
+    body('tagsCsv')
       .isLength({ min: 1 })
       .withMessage('Please enter a tag'),
     body('maxweight')
@@ -59,6 +59,7 @@ router.post(
 
     if (errors.isEmpty()) {
       const overseer = new Overseer(req.body);
+      overseer.tags= req.body.tagsCsv.split(",")
       overseer.save()
         .then(() => { res.redirect('/overseers'); })
         .catch(() => { res.send('Sorry! Something went wrong.'); });
@@ -70,7 +71,6 @@ router.post(
       });
     }
 
-    console.log(req.body);
   }
 );
 

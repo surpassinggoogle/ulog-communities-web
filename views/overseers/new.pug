@@ -8,6 +8,8 @@ block content
       for error in errors
         li= error.msg
 
+  a(href="/overseers") Back
+
   form(action="./new" method="POST" class="form-registration")
     label(for="name") Name:
     input(
@@ -19,13 +21,11 @@ block content
     )
 
     label(for="tags") Tags:
-    input(
-      type="text"
-      id="tags"
-      name="tags"
+    textarea(
+      id="tagsCsv"
+      name="tagsCsv"
       class="form-control"
-      value=data.tags
-    )
+    )= tagsCsv
 
     label(for="maxweight") Max Vote Weight:
     input(
