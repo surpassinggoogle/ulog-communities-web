@@ -74,3 +74,15 @@ body {
   padding:0;
   outline:none;
 }
+
+@media screen and (min-width: 601px) {
+  html {
+    font-size: 1.4em;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 1.2em;
+  }
+}
