@@ -18,17 +18,15 @@ block content
       name="name"
       class="form-control"
       value=data.name
+      readonly=true
     )
 
     label(for="tags") Tags:
-    each tag in data.tags
-      input(
-        type="text"
-        id="tags"
-        name="tags"
-        class="form-control"
-        value=tag
-      )
+    textarea(
+      id="tagsCsv"
+      name="tagsCsv"
+      class="form-control"
+    )= tagsCsv
 
     label(for="maxweight") Max Vote Weight:
     input(

@@ -3,18 +3,21 @@ extends ../layout
 block content
 
   if overseers.length
-    table.listing-table.table-dark.table-striped
-      tr
-        th Name
-        th Sub-tags
-        th Max Vote Weight
-      each overseer in overseers
-        tr
-          td
-            a(href='overseers/edit/' + overseer.name)= overseer.name
-          td
-            each tag in overseer.tags
-              span.badge.badge-primary= tag
-          td= overseer.maxweight
+    div(class="container-fluid")
+      table.table.table-hover
+        thead.thead-light
+          tr.d-flex
+            th(class="col-2") Name
+            th(class="col-8") Sub-tags
+            th(class="col-2") Max Vote Weight
+        tbody
+          each overseer in overseers
+            tr.d-flex
+              td(class="col-2")
+                a(href='overseers/edit/' + overseer.name)= overseer.name
+              td(class="col-8")
+                each tag in overseer.tags
+                  span.badge.badge-primary.subtag= tag
+              td(class="col-2")= overseer.maxweight
   else
     p No overseers yet :(
