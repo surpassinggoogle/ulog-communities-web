@@ -1,6 +1,7 @@
 body {
   padding: 40px 10px;
   background-color: #eee;
+  overflow-y: scroll;
 }
 .listing-reg h1 {
   text-align: center;
@@ -72,4 +73,16 @@ body {
   border:none;
   padding:0;
   outline:none;
+}
+
+@media screen and (min-width: 601px) {
+  html {
+    font-size: 1.6em;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 1.2em;
+  }
 }
