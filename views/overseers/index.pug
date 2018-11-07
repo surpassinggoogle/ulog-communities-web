@@ -25,17 +25,17 @@ block content
           table.table.table-striped.table-hover
             thead.thead-light
               tr.d-flex
-                th(class="col-8") Name
-                th(class="col-2") Max Weight
-                th(class="col-2")
+                th(class="col-6") Name
+                th(class="col-3") Max Weight
+                th(class="col-3")
             tbody
               each overseer in overseers
                 tr.d-flex
-                  td(class="col-8")
+                  td(class="col-6")
                     a(href='overseers/' + overseer.name + '/edit')= overseer.name
-                  td(class="col-2 col-md-2")
+                  td(class="col-3")
                     a(href='overseers/' + overseer.name + '/edit')= overseer.maxweight
-                  td(class="col-2 col-md-2")
+                  td(class="col-3")
                     form(
                       action=("/overseers/" + overseer.name + '/delete')
                       method="post"
