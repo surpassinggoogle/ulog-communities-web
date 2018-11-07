@@ -12,14 +12,13 @@ block content
       for error in errors
         li= error.msg
 
-  div(class="container-fluid")
-    div(class="row")
-      div(class="col-12")
-        a(
-          class="btn btn-primary"
-          href="/overseers/new"
-          style="float: right"
-        ) Add Overseer
+  div(class="row")
+    div(class="col-12")
+      a(
+        class="btn btn-primary"
+        href="/overseers/new"
+        style="float: right"
+      ) Add Overseer
   if overseers.length
       div(class="row")
         div(class="col-12")
