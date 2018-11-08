@@ -25,19 +25,45 @@ block content
           table.table.table-striped.table-hover
             thead.thead-light
               tr.d-flex
-                th(class="col-6") Name
+                th(class="col-5") Name
+                th(class="col-2") Sub-tags
                 th(class="col-3") Max Weight
-                th(class="col-3")
+                th(class="col-2")
             tbody
               each overseer in overseers
                 tr.d-flex
-                  td(class="col-6")
+                  td(class="col-5")
                     a(href='overseers/' + overseer.name + '/edit')= overseer.name
+                  td(class="col-2")
+                    button.btn.btn-outline-primary(
+                      type="button"
+                      data-toggle="modal" 
+                      data-target='#' + overseer.name
+                    )
+                      i(class="fas fa-tags")
+                    div.modal.fade(
+                      id=overseer.name
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="exampleModalCenterTitle"
+                      aria-hidden="true"
+                    )
+                      div.modal-dialog.modal-dialog-centered(role="document")
+                        div.modal-content
+                          div.modal-header
+                            h5.modal-title= overseer.name + "'s sub-tags"
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          div.modal-body
+                            each tag in overseer.tags
+                              span.btn.btn-primary.btn-sm.subtag= tag
+
                   td(class="col-3")
                     a(href='overseers/' + overseer.name + '/edit')= overseer.maxweight
-                  td(class="col-3")
+                  td(class="col-2")
                     form(
-                      action=("/overseers/" + overseer.name + '/delete')
+                      action=('/overseers/' + overseer.name + '/delete')
                       method="post"
                     )
                       a(
