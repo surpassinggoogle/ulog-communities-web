@@ -20,6 +20,25 @@ block content
         style="float: right"
       ) Add Overseer
   if overseers.length
+
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">Are you sure you want to remove <strong><span class="overseer">overseer</span></strong> as an overseer?</div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-primary confirm">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       div(class="row")
         div(class="col-12")
           table.table.table-striped.table-hover
@@ -31,7 +50,9 @@ block content
                 th(class="col-2")
             tbody
               each overseer in overseers
-                tr.d-flex
+                tr.d-flex(
+                  id="row-" + overseer.name
+                )
                   td(class="col-5")
                     a(href='overseers/' + overseer.name + '/edit')= overseer.name
                   td(class="col-2")
@@ -62,19 +83,41 @@ block content
                   td(class="col-3")
                     a(href='overseers/' + overseer.name + '/edit')= overseer.maxweight
                   td(class="col-2")
-                    form(
-                      action=('/overseers/' + overseer.name + '/delete')
-                      method="post"
+                    a(
+                      class="btn btn-outline-primary"
+                      href='overseers/' + overseer.name + '/edit'
                     )
-                      a(
-                        class="btn btn-outline-primary"
-                        href='overseers/' + overseer.name + '/edit'
-                      )
-                        i(class="fas fa-pencil-alt")
-                      button(
-                        type="submit"
-                        class="btn btn-outline-danger"
-                      )
-                        i(class="fas fa-trash-alt")
+                      i(class="fas fa-pencil-alt")
+                    button(
+                      type="button"
+                      class="btn btn-outline-danger"
+                      data-toggle="modal"
+                      data-target="#deleteModal"
+                      data-overseer=overseer.name
+                    )
+                      i(class="fas fa-trash-alt")
+
+      script.
+        $('#deleteModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget) // Button that triggered the modal
+          var overseer = button.data('overseer') // Extract info from data-* attributes
+          // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+          // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+          var modal = $(this)
+          modal.find('.modal-title').text('Remove ' + overseer + ' as an overseer?')
+          modal.find('.modal-body span').text(overseer)
+          modal.find('.confirm').val(overseer)
+        })
+
+        $('.confirm').on('click', e => {
+          const overseer = e.target.value;
+          console.log('close modal', e.target.value);
+          $('#deleteModal').modal('hide');
+          $.post('overseers/' + overseer + '/delete', function() {
+            $("#row-" + overseer).remove()
+          })
+        })
+
   else
     p No overseers yet :(
+
